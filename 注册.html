@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div class="container">
+            <h2>注册</h2>
+            <div class="form-group">
+              <label for="username">用户名</label>
+              <input type="text" id="username" placeholder="用户名">
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" placeholder="密码">
+            </div>
+            <button id="loginBtn">注册</button>
+            <p id="return"></p>
+    </div>
+    <script>
+        const loginButton = document.getElementById("loginBtn");
+        loginButton.addEventListener("click", function () {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            console.log(JSON.stringify({ username, password }))
+            const data = {
+                username: username,
+                password:password,
+            };
+            const requestOptions = {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) 
+                };
+                fetch('http://127.0.0.1:8000/register', requestOptions)
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error('发送失败');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    var returntext = document.getElementById('return');
+                    returntext.innerHTML = data
+                })
+                .catch(error => {
+                    console.error('ERROE:', error);
+                });
+    });
+    // if (p.value=="注册成功"){
+    //     window.location.href="E:\前端作业\登录.html"
+    // }
+</script>
+</body>
+</html>
